@@ -1,0 +1,40 @@
+﻿@page "/"
+<h3>Index</h3>
+
+@if (fetchingData == true)
+{
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="40" aria-valuemax="100" style="width:100%"></div>
+    </div>
+}
+else
+{
+    <a href=@($"Upsert") class="btn btn-primary"><span class="bi bi-plus" />Add Engineer</a>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Speciality</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var eng in engineers)
+                {
+                    <tr>
+                        <td>@eng.name</td>
+                        <td>@eng.country</td>
+                        <td>@eng.speciality</td>
+                        <td>
+                            <a href=@($"Upsert/{eng.id}") class="btn btn-primary"><span class="bi bi-pencil"></span>Edit </a>
+                            <button class="btn btn-danger" @onclick="async () => await DeleteEngineer(eng.id)"><span class="bi bi-trash" />Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
